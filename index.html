@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ФЛЕШ — танцевальная студия | Танцуй громче</title>
+<style>
+  /* Базовые сбросы и переменные */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0d0d0d;
+    --bg-2: #161616;
+    --accent: #d6ff00; /* кислотно-жёлтый */
+    --text: #f2f2f2;
+    --muted: #9a9a9a;
+    --radius: 18px;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: "Segoe UI", Tahoma, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+  }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+  /* Шапка */
+  header {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(13,13,13,0.9);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid #222;
+  }
+  .nav {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 18px 0;
+  }
+  .logo {
+    font-size: 28px; font-weight: 900;
+    letter-spacing: 4px; color: var(--accent);
+    font-style: italic;
+    text-shadow: 0 0 12px rgba(214,255,0,0.35);
+  }
+  .menu { display: flex; gap: 28px; list-style: none; }
+  .menu a {
+    color: var(--text); text-decoration: none;
+    font-weight: 600; text-transform: uppercase; font-size: 14px;
+    transition: color .2s;
+  }
+  .menu a:hover { color: var(--accent); }
+
+  /* Главный экран */
+  .hero {
+    display: grid; grid-template-columns: 1.1fr 1fr;
+    gap: 40px; align-items: center;
+    padding: 80px 0;
+  }
+  .hero h1 {
+    font-size: clamp(42px, 6vw, 76px);
+    font-weight: 900; line-height: 0.95;
+    text-transform: uppercase; font-style: italic;
+    letter-spacing: -1px;
+  }
+  .hero h1 span { color: var(--accent); display: block; }
+  .slogan {
+    margin-top: 20px; font-size: 20px;
+    color: var(--muted); font-weight: 500;
+  }
+  .btn {
+    display: inline-block; margin-top: 32px;
+    background: var(--accent); color: #000;
+    padding: 16px 34px; border: none; border-radius: 50px;
+    font-weight: 800; font-size: 16px;
+    text-transform: uppercase; letter-spacing: 1px;
+    cursor: pointer; text-decoration: none;
+    transition: transform .2s, box-shadow .2s, background .2s;
+    box-shadow: 0 0 0 rgba(214,255,0,0.5);
+  }
+  .btn:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 8px 30px rgba(214,255,0,0.45);
+    background: #eaff3a;
+  }
+  .hero-img {
+    width: 100%; border-radius: var(--radius);
+    aspect-ratio: 4/5; object-fit: cover;
+    border: 2px solid #222;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  }
+
+  /* Общие секции */
+  section { padding: 80px 0; }
+  .section-title {
+    font-size: clamp(30px, 4vw, 44px);
+    font-weight: 900; text-transform: uppercase;
+    font-style: italic; margin-bottom: 40px;
+    text-align: center;
+  }
+  .section-title span { color: var(--accent); }
+
+  /* Почему мы */
+  .features {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .card {
+    background: var(--bg-2);
+    border: 1px solid #222;
+    border-radius: var(--radius);
+    padding: 32px 26px;
+    transition: transform .25s, border-color .25s;
+  }
+  .card:hover {
+    transform: translateY(-6px);
+    border-color: var(--accent);
+  }
+  .card-icon {
+    width: 54px; height: 54px;
+    background: var(--accent); color: #000;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px; font-weight: 900; margin-bottom: 18px;
+  }
+  .card h3 {
+    font-size: 20px; margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+  .card p { color: var(--muted); font-size: 15px; }
+
+  /* Цены */
+  #prices { background: var(--bg-2); }
+  .prices {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .price-card {
+    background: var(--bg);
+    border: 1px solid #222;
+    border-radius: var(--radius);
+    padding: 34px 26px;
+    text-align: center;
+    transition: transform .25s, border-color .25s;
+  }
+  .price-card:hover { transform: translateY(-6px); border-color: var(--accent); }
+  .price-card.popular {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px rgba(214,255,0,0.2);
+    position: relative;
+  }
+  .popular::before {
+    content: "ХИТ"; position: absolute; top: -12px; left: 50%;
+    transform: translateX(-50%);
+    background: var(--accent); color: #000;
+    padding: 4px 14px; border-radius: 20px;
+    font-size: 12px; font-weight: 900;
+  }
+  .price-card h3 {
+    font-size: 22px; text-transform: uppercase; margin-bottom: 8px;
+  }
+  .price {
+    font-size: 42px; font-weight: 900; color: var(--accent);
+    margin: 18px 0 8px;
+  }
+  .price small { font-size: 16px; color: var(--muted); font-weight: 500; }
+  .price-card ul {
+    list-style: none; text-align: left;
+    margin: 20px 0 26px; color: var(--muted);
+  }
+  .price-card ul li { padding: 6px 0; font-size: 14px; }
+  .price-card ul li::before { content: "⚡ "; color: var(--accent); }
+
+  /* Отзывы */
+  .reviews {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+  .review {
+    background: var(--bg-2);
+    border-left: 4px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 28px;
+  }
+  .review p { font-size: 16px; font-style: italic; margin-bottom: 14px; }
+  .review .author { color: var(--accent); font-weight: 700; }
+
+  /* Подвал */
+  footer {
+    background: #000; padding: 50px 0 30px;
+    border-top: 1px solid #222;
+  }
+  .footer-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 30px; margin-bottom: 30px;
+  }
+  .footer-grid h4 {
+    color: var(--accent); text-transform: uppercase;
+    margin-bottom: 14px; font-size: 14px; letter-spacing: 2px;
+  }
+  .footer-grid a, .footer-grid p {
+    color: var(--muted); text-decoration: none;
+    display: block; margin-bottom: 6px; font-size: 14px;
+  }
+  .footer-grid a:hover { color: var(--accent); }
+  .copy {
+    text-align: center; color: #555;
+    padding-top: 20px; border-top: 1px solid #1a1a1a;
+    font-size: 13px;
+  }
+
+  /* Адаптив */
+  @media (max-width: 768px) {
+    .hero { grid-template-columns: 1fr; padding: 50px 0; }
+    .features, .prices, .reviews, .footer-grid { grid-template-columns: 1fr; }
+    .menu { gap: 16px; }
+    .menu a { font-size: 12px; }
+    section { padding: 50px 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Шапка с логотипом и меню -->
+<header>
+  <div class="container nav">
+    <div class="logo">ФЛЕШ</div>
+    <ul class="menu">
+      <li><a href="#features">О нас</a></li>
+      <li><a href="#prices">Цены</a></li>
+      <li><a href="#contacts">Контакты</a></li>
+    </ul>
+  </div>
+</header>
+
+<!-- Главный экран -->
+<section class="hero container">
+  <div>
+    <h1>Танцуй <span>громче.</span></h1>
+    <p class="slogan">Хип-хоп, брейкинг и heels для тех, кто не боится быть в центре внимания.</p>
+    <a href="#prices" class="btn" onclick="alert('Заявка принята! Мы свяжемся с тобой 🔥'); return false;">Оставить заявку</a>
+  </div>
+  <!-- Картинка лежит рядом с index.html -->
+  <img src="hero.jpg" alt="Танцевальная студия ФЛЕШ" class="hero-img">
+</section>
+
+<!-- Блок преимуществ -->
+<section id="features">
+  <div class="container">
+    <h2 class="section-title">Почему <span>мы</span></h2>
+    <div class="features">
+      <div class="card">
+        <div class="card-icon">★</div>
+        <h3>Чемпионы России</h3>
+        <p>Наши педагоги — действующие чемпионы страны. Учись у лучших, перенимай реальный опыт сцены и батлов.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">⚡</div>
+        <h3>Батлы каждый месяц</h3>
+        <p>Никакой скучной теории — только движ. Каждый месяц устраиваем внутренние батлы, где ты покажешь, на что способен.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">▶</div>
+        <h3>Видео итогового показа</h3>
+        <p>В конце потока снимаем профессиональный клип с вашим выступлением. Готовый контент для твоих соцсетей.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Блок с ценами -->
+<section id="prices">
+  <div class="container">
+    <h2 class="section-title">Наши <span>тарифы</span></h2>
+    <div class="prices">
+      <div class="price-card">
+        <h3>Разовое</h3>
+        <div class="price">500<small>₽</small></div>
+        <p style="color:var(--muted); font-size:14px;">за одно занятие</p>
+        <ul>
+          <li>Любое направление</li>
+          <li>Группа до 12 человек</li>
+          <li>Без обязательств</li>
+        </ul>
+        <a href="#" class="btn" onclick="alert('Заявка принята 🔥'); return false;">Записаться</a>
+      </div>
+      <div class="price-card popular">
+        <h3>Абонемент 8</h3>
+        <div class="price">3500<small>₽</small></div>
+        <p style="color:var(--muted); font-size:14px;">437₽ / занятие</p>
+        <ul>
+          <li>8 занятий в месяц</li>
+          <li>Участие в батле</li>
+          <li>Скидка 15% на мерч</li>
+        </ul>
+        <a href="#" class="btn" onclick="alert('Заявка принята 🔥'); return false;">Записаться</a>
+      </div>
+      <div class="price-card">
+        <h3>VIP-поток</h3>
+        <div class="price">5500<small>₽</small></div>
+        <p style="color:var(--muted); font-size:14px;">с видеосъёмкой</p>
+        <ul>
+          <li>10 занятий + репетиции</li>
+          <li>Профи-съёмка клипа</li>
+          <li>Выход на сцену</li>
+        </ul>
+        <a href="#" class="btn" onclick="alert('Заявка принята 🔥'); return false;">Записаться</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Блок отзывов -->
+<section id="reviews">
+  <div class="container">
+    <h2 class="section-title">Что говорят <span>ученики</span></h2>
+    <div class="reviews">
+      <div class="review">
+        <p>«Пришла на хип-хоп просто попробовать — залипла на полгода. Атмосфера просто огонь, педагоги объясняют так, что даже я, деревянная, начала попадать в ритм 🔥»</p>
+        <div class="author">— Алина, 16 лет</div>
+      </div>
+      <div class="review">
+        <p>«Занимаюсь брейкингом 4 месяца, уже выступил на первом батле. В других студиях такого драйва не было — тут реально учат, а не просто гоняют по залу.»</p>
+        <div class="author">— Марк, 18 лет</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Подвал -->
+<footer id="contacts">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h4>Контакты</h4>
+        <p>г. Москва, ул. Танцевальная, 7</p>
+        <p>+7 (999) 123-45-67</p>
+        <p>flash@dance.ru</p>
+      </div>
+      <div>
+        <h4>Мы в сети</h4>
+        <a href="#">Telegram</a>
+        <a href="#">VKонтакте</a>
+        <a href="#">YouTube</a>
+      </div>
+      <div>
+        <h4>Режим работы</h4>
+        <p>Пн–Пт: 15:00 – 22:00</p>
+        <p>Сб–Вс: 11:00 – 20:00</p>
+      </div>
+    </div>
+    <div class="copy">© 2026 Танцевальная студия «ФЛЕШ». Танцуй громче.</div>
+  </div>
+</footer>
+
+</body>
+</html>
